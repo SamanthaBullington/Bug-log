@@ -17,11 +17,11 @@ class BugsService {
   async edit(body, id, userId) {
     const bug = await dbContext.Bugs.findOneAndUpdate({ _id: id, creatorId: userId }, body, { new: true, runValidators: true })
     // const bug = await dbContext.Bugs.findOneAndUpdate(body.id, body, { new: true })
-    // if (!bug) {
-    //   throw new BadRequest('no bug to edit')
-    // } else if (bug.closed) {
-    //   throw new BadRequest('bug is closed')
-    // }
+    if (!bug) {
+      throw new BadRequest('no bug to edit')
+    } else if (bug.closed) {
+      throw new BadRequest('bug is closed')
+    }
     return bug
   }
 }
