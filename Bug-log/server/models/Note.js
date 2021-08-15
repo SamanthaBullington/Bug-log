@@ -6,7 +6,7 @@ const ObjectId = Schema.Types.ObjectId
 export const Note = new Schema(
   {
     body: { type: String, required: true },
-    bugId: { type: ObjectId, required: true },
+    bugId: { type: ObjectId, ref: 'Bug', required: true },
     creatorId: { type: ObjectId, ref: 'Account', required: true }
   },
   { timestamps: true, toJSON: { virtuals: true } }
@@ -15,5 +15,12 @@ Note.virtual('creator', {
   localField: 'creatorID',
   ref: 'Account',
   foreignField: 'Account',
+  justOne: true
+})
+
+Note.virtual('bug', {
+  localField: 'bugId',
+  ref: 'Bug',
+  foreignField: '_id',
   justOne: true
 })
