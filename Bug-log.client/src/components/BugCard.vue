@@ -1,6 +1,6 @@
 <template>
   <div class="col-4">
-    <div class="card" style="width: 18rem;">
+    <div class="card" style="">
       <div class="card-body">
         <h5 class="card-title">
           {{ bug.title }}

@@ -12,7 +12,7 @@ export const Note = new Schema(
   { timestamps: true, toJSON: { virtuals: true } }
 )
 Note.virtual('creator', {
-  localField: 'creatorID',
+  localField: 'creatorId',
   ref: 'Account',
   foreignField: 'Account',
   justOne: true
