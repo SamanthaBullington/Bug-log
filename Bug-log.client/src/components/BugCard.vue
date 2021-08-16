@@ -1,13 +1,20 @@
 <template>
-  <div class="col-4">
-    <div class="card" style="">
-      <div class="card-body">
-        <h5 class="card-title">
-          {{ bug.title }}
-        </h5>
-        <p class="card-text">
-          {{ bug.description }}
-        </p>
+  <div class="row">
+    <div class="bug-style">
+      <div class="card w-100 ">
+        <div class="card-body ">
+          <router-link :to="{name: 'BugDetails', params: {id:bug.id}}" class="col-8 card-title" :title="bug.title + ' BugDetails'">
+            <h1>
+              {{ bug.title }}
+            </h1>
+          </router-link>
+          <p class="card-text">
+            {{ bug.description }}
+          </p>
+          <div class="col-4 text-right">
+            <DeleteButton @delete="deleteBug(bug.id)" :item-name="bug.title" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -17,7 +24,7 @@
 
 import { computed } from '@vue/runtime-core'
 import { AppState } from '../AppState'
-// import { bugsService } from '../services/BugsService'
+import { bugsService } from '../services/BugsService'
 
 export default {
   props: {
@@ -29,10 +36,20 @@ export default {
   setup() {
     return {
       account: computed(() => AppState.account),
-      bugs: computed(() => AppState.bugs)
+      bugs: computed(() => AppState.bugs),
+      async deleteBug(id) {
+        await bugsService.delete(id)
+      }
     }
   }
 }
 </script>
 
-<style></style>
+<style>
+.bug-style{
+  margin: 1px;
+  padding: 1px;
+  border: 3px;
+  border-color: black;
+}
+</style>

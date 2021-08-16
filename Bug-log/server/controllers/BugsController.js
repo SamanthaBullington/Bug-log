@@ -7,13 +7,14 @@ export class BugsController extends BaseController {
   constructor() {
     super('api/bugs')
     this.router
-      .use(Auth0Provider.getAuthorizedUserInfo)
-      .post('', this.create)
       .get('', this.getAllBugs)
       .get('/:id', this.getOneBugById)
       .get('/:id/notes', this.getNotesByBugId)
-      // .put('/:id', this.editBug)
+      .use(Auth0Provider.getAuthorizedUserInfo)
+      .post('', this.create)
+      .put('/:id', this.editBug)
       // .delete('/:id', this.closeBug)
+      .delete('/:id', this.deleteBug)
   }
 
   async getAllBugs(req, res, next) {
@@ -44,15 +45,37 @@ export class BugsController extends BaseController {
     }
   }
 
-  // async editBug(req, res, next) {
+  async editBug(req, res, next) {
+    try {
+      req.body.id = req.params.id
+      // remove the closed property from the req.body so it cannot be edited on a put
+      delete req.body.closed
+      const bug = await bugsService.edit(req.body, req.params.id, req.userInfo.id)
+      res.send(bug)
+    } catch (error) {
+      next(error)
+    }
+  }
+  // async closeBug(req, res, next) {
   //   try {
   //     req.body.id = req.params.id
-  //     const bug = await bugsService.edit(req.body.id)
+  //     req.body.creatorId = req.userInfo.id
+
+  //     const bug = await bugsService.closeBug(req.body, req.userInfo.id)
   //     res.send(bug)
   //   } catch (error) {
-  //     next(error)
+  //     next(error, 'error')
   //   }
   // }
+
+  async deleteBug(req, res, next) {
+    try {
+      const bug = await bugsService.destroy(req.params.id, req.userInfo.id)
+      res.send({ message: `Bug ${bug.title} deleted` })
+    } catch (error) {
+      next(error)
+    }
+  }
 
   async getNotesByBugId(req, res, next) {
     try {
