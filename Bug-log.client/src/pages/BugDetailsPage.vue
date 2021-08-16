@@ -1,20 +1,40 @@
 <template>
   <BugDetailsCard :bug="currentBug" />
+  <NoteCard v-for="n in notes" :key="n.id" :note="n" />
+  <div class="col-6">
+    <form @submit.prevent="createNote">
+      <div class="form-group">
+        <label for="note"></label>
+        <textarea name="note" id="new-note-textarea" cols="30" rows="10" v-model="state.newNote.body"></textarea>
+      </div>
+      <button type="submit" class="btn btn-success" title="Create Note">
+        ADD NOTE
+      </button>
+    </form>
+  </div>
 </template>
 
 <script>
 
-import { computed, onMounted } from '@vue/runtime-core'
+import { computed, onMounted, reactive } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { bugsService } from '../services/BugsService'
+import { notesService } from '../services/NotesService'
 import { useRoute } from 'vue-router'
 import Pop from '../utils/Notifier'
 
 export default {
   setup() {
     const route = useRoute()
+    const state = reactive({
+      newNote: {
+        body: '',
+        taskId: route.params.bug_id
+      }
+    })
     onMounted(async() => {
       try {
+        await notesService.getAllNotesByBugId(route.params.bug_id)
         await bugsService.getOneBugById(route.params.id)
       } catch (error) {
         Pop.toast(error, 'error')
@@ -22,11 +42,19 @@ export default {
     })
 
     return {
+      state,
       account: computed(() => AppState.account),
+      notes: computed(() => AppState.notes),
       bugs: computed(() => AppState.bugs),
       currentBug: computed(() => AppState.currentBug),
       async deleteBug(id) {
         await bugsService.delete(id)
+      },
+      async createNote() {
+        await notesService.create(state.newNote)
+        state.newNote = {
+          bugId: route.params.bug_id
+        }
       }
     }
   }

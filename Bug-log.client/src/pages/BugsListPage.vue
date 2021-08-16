@@ -1,39 +1,40 @@
 <template>
-  <div class="row w-100">
-    <h1>Current Bugs:</h1>
-  </div>
-  <br />
-  <div class="row justify-content-around">
-    <div v-if="bugs" class="col-md-6 action m-3">
-      <BugCard
-        v-for="b in bugs"
-        :key="b.id"
-        :bug="b"
-      />
+  <div class="container-fluid">
+    <div class="row bg-dark">
+      <h1>Current Bugs:</h1>
     </div>
-    <div v-else class="col-6">
+    <div class="row justify-content-around">
+      <div v-if="bugs" class="col-md-6 action m-3">
+        <BugCard
+          v-for="b in bugs"
+          :key="b.id"
+          :bug="b"
+        />
+      </div>
+      <div v-else class="col-6">
       <!-- <LoaderComponent /> -->
-    </div>
-    <div class=" card col-md-5 mt-2 h-25" id="new-bug-form">
-      <form @submit.prevent="createBug">
-        <div class="form-group">
-          <label for="bug-name">Bug Title</label>
-          <input type="text"
-                 class="form-control"
-                 required
-                 id="bug-name"
-                 aria-describedby="bug-title"
-                 v-model="state.newBug.title"
-          >
-        </div>
-        <div class="form-group">
-          <label for="bug-description">Description</label>
-          <textarea class="form-control" required id="bug-description" v-model="state.newBug.description" />
-        </div>
-        <button type="submit" class="btn btn-primary" title="create bug">
-          + CREATE
-        </button>
-      </form>
+      </div>
+      <div class=" card col-md-5 mt-2 h-25" id="new-bug-form">
+        <form @submit.prevent="createBug">
+          <div class="form-group">
+            <label for="bug-name">Bug Title</label>
+            <input type="text"
+                   class="form-control"
+                   required
+                   id="bug-name"
+                   aria-describedby="bug-title"
+                   v-model="state.newBug.title"
+            >
+          </div>
+          <div class="form-group">
+            <label for="bug-description">Description</label>
+            <textarea class="form-control" required id="bug-description" v-model="state.newBug.description" />
+          </div>
+          <button type="submit" class="btn btn-primary" title="create bug">
+            + CREATE
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </template>

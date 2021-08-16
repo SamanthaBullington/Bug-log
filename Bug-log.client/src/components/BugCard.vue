@@ -1,9 +1,9 @@
 <template>
   <div class="row">
     <div class="bug-style">
-      <div class="card w-100 ">
+      <div class="card ">
         <div class="card-body ">
-          <router-link :to="{name: 'BugDetails', params: {id:bug.id}}" class="col-8 card-title" :title="bug.title + ' BugDetails'">
+          <router-link :to="{name: 'BugDetails', params: {id:bug.id}}" class="col-8 card-title" :title="bug.title + ' Details'">
             <h1>
               {{ bug.title }}
             </h1>

@@ -42,6 +42,16 @@ class BugsService {
       }
     }
   }
+
+  async editBug(bug) {
+    try {
+      const res = await api.put('api/bugs/' + bug.id, bug)
+      AppState.currentBug = res.data
+      this.getOneBugById(bug.id)
+    } catch (error) {
+      Pop.toast(error)
+    }
+  }
 }
 
 export const bugsService = new BugsService()
