@@ -2,6 +2,7 @@ import BaseController from '../utils/BaseController'
 import { Auth0Provider } from '@bcwdev/auth0provider'
 import { bugsService } from '../services/BugsService'
 import { notesService } from '../services/NotesService'
+import { Bug } from '../models/Bug'
 
 export class BugsController extends BaseController {
   constructor() {
@@ -13,8 +14,8 @@ export class BugsController extends BaseController {
       .use(Auth0Provider.getAuthorizedUserInfo)
       .post('', this.create)
       .put('/:id', this.editBug)
-      // .delete('/:id', this.closeBug)
-      .delete('/:id', this.deleteBug)
+      .delete('/:id', this.closeBug)
+      // .delete('/:id', this.deleteBug)
   }
 
   async getAllBugs(req, res, next) {
@@ -45,6 +46,17 @@ export class BugsController extends BaseController {
     }
   }
 
+  async closeBug(req, res, next) {
+    try {
+      req.body.id = req.params.id
+      req.body.creatorId = req.userInfo.id
+      const bug = await bugsService.closeBug(req.body, req.userInfo.id)
+      res.send(bug)
+    } catch (error) {
+      next(error, 'error')
+    }
+  }
+
   async editBug(req, res, next) {
     try {
       req.body.id = req.params.id
@@ -56,26 +68,15 @@ export class BugsController extends BaseController {
       next(error)
     }
   }
-  // async closeBug(req, res, next) {
-  //   try {
-  //     req.body.id = req.params.id
-  //     req.body.creatorId = req.userInfo.id
 
-  //     const bug = await bugsService.closeBug(req.body, req.userInfo.id)
-  //     res.send(bug)
+  // async deleteBug(req, res, next) {
+  //   try {
+  //     const bug = await bugsService.destroy(req.params.id, req.userInfo.id)
+  //     res.send({ message: `Bug ${bug.title} deleted` })
   //   } catch (error) {
-  //     next(error, 'error')
+  //     next(error)
   //   }
   // }
-
-  async deleteBug(req, res, next) {
-    try {
-      const bug = await bugsService.destroy(req.params.id, req.userInfo.id)
-      res.send({ message: `Bug ${bug.title} deleted` })
-    } catch (error) {
-      next(error)
-    }
-  }
 
   async getNotesByBugId(req, res, next) {
     try {

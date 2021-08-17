@@ -17,33 +17,38 @@ class BugsService {
   async edit(body, id, userId) {
     // This find one should also check if the bug is closed, do not allow edits to closed bugs
     const bug = await dbContext.Bugs.findOneAndUpdate({ _id: id, creatorId: userId, closed: false }, body, { new: true, runValidators: true })
-    // const bug = await dbContext.Bugs.findOneAndUpdate(body.id, body, { new: true })
     if (!bug) {
       throw new BadRequest('no bug to edit')
     }
+    // if (bug.creatorId.toString() !== id) {
+    //   throw new Forbidden('This is not your bug')
+    // }
+    // WHY DOESNT THIS CODE WORK? ^^^
     return bug
   }
 
-  // async closeBug(bug, id) {
-  //   const currentBug = await dbContext.Bugs.findById(bug.id)
-  //   if (!currentBug) {
-  //     throw new BadRequest('Invalid Id')
-  //   }
-  //   if (currentBug.creatorId.toString() !== id) {
-  //     throw new Forbidden('This is not your bug')
-  //   }
-  //   return await dbContext.Bugs.findByIdAndDelete(id)
-  // }
-
-  async destroy(id, userId) {
-    const bug = await dbContext.Bugs.findById(id)
-    if (!bug) {
-      throw new BadRequest('Invalid ID')
+  async closeBug(bug, id) {
+    const currentBug = await this.getOne(bug.id)
+    if (!currentBug) {
+      throw new BadRequest('Invalid Id')
     }
-    if (bug.creatorId.toString() !== userId) {
+    if (currentBug.creatorId.toString() !== id) {
       throw new Forbidden('This is not your bug')
     }
-    return await dbContext.Bugs.findByIdAndDelete(id)
+    currentBug.closed = true
+    const closedBug = await dbContext.Bugs.findByIdAndUpdate(currentBug.id, currentBug, { new: true, runValidators: true }).populate('creator')
+    return closedBug
   }
+
+//   async destroy(id, userId) {
+//     const bug = await dbContext.Bugs.findById(id)
+//     if (!bug) {
+//       throw new BadRequest('Invalid ID')
+//     }
+//     if (bug.creatorId.toString() !== userId) {
+//       throw new Forbidden('This is not your bug')
+//     }
+//     return await dbContext.Bugs.findByIdAndDelete(id)
+//   }
 }
 export const bugsService = new BugsService()

@@ -163,6 +163,6 @@ a:hover {
   text-transform: uppercase;
 }
 .nav-item .nav-link.router-link-exact-active{
-  color:crimson;
+  color:#d40000;
 }
 </style>

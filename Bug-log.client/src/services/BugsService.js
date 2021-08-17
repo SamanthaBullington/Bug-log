@@ -1,6 +1,7 @@
 import { AppState } from '../AppState'
 import Pop from '../utils/Notifier'
 import { api } from './AxiosService'
+import { logger } from '../utils/Logger'
 
 class BugsService {
   async getAll() {
@@ -43,9 +44,18 @@ class BugsService {
     }
   }
 
-  async editClosed(bug, openStatus) {
-    bug.closed = openStatus
-    const res = await api.put('api/bugs/' + bug.id, bug)
+  async closeBug(bug) {
+    if (AppState.user.isAuthenticated) {
+      if (AppState.account.id === bug.creator.id) {
+        try {
+          const res = await api.delete('api/bugs/' + bug.id)
+          logger.log(res.data)
+          AppState.currentBug = res.data
+        } catch (error) {
+          Pop.toast(error)
+        }
+      } else Pop.toast('This is not your bug')
+    }
   }
 
   async editBug(bug) {

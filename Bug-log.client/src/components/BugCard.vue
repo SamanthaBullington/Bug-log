@@ -1,26 +1,33 @@
 <template>
-  <div class="row">
-    <div class="bug-style">
-      <div class="card ">
-        <div class="card-body ">
+  <div class="bug-style">
+    <div class="card p-2 ">
+      <div class="row">
+        <div class="col-md-2">
           <img :src="bug.creator.picture" :alt="bug.creator.name" :title="bug.creator.name">
-          <router-link :to="{name: 'BugDetails', params: {id:bug.id}}" class="col-8 card-title" :title="bug.title + ' Details'">
-            <i class="mx-2 mdi btn" :class="[state.closed ? state.openClass : state.closedClass]" @click="changeOpen" :title="state.closed? 'Open' : 'Closed'">
-            </i>
-            <h1>
+          <div class="row">
+            <small> <p class="pl-3 card-text">
+              {{ account.name }}
+            </p></small>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <router-link :to="{name: 'BugDetails', params: {id:bug.id}}" class="col-8" :title="bug.title + ' Details'">
+            <h3 class="m-0">
               {{ bug.title }}
-            </h1>
+            </h3>
           </router-link>
+
+          <br />
           <p class="card-text">
             {{ bug.description }}
           </p>
-          <p class="card-text">
-            {{ account.name }}
-          </p>
-          <div class="col-4 text-right">
-            <DeleteButton @delete="deleteBug(bug.id)" :item-name="bug.title" />
-          </div>
         </div>
+        <i class="mx-2 mdi btn h-25" :class="[state.closed ? state.openClass : state.closedClass]" :title="state.closed? 'Closed' : 'Open'">
+        </i>
+
+        <!-- <div class="col-4 text-right">
+          <DeleteButton @delete="deleteBug(bug.id)" :item-name="bug.title" />
+        </div> -->
       </div>
     </div>
   </div>
@@ -53,10 +60,10 @@ export default {
       async deleteBug(id) {
         await bugsService.delete(id)
       },
-      async changeOpen() {
+      async closeBug() {
         try {
           state.closed = !state.closed
-          await bugsService.editClosed(props.bug, state.closed)
+          await bugsService.closeBug(props.bug, state.closed)
           Pop.toast('Status Changed', 'success')
         } catch (error) {
           Pop.toast(error, 'error')
@@ -73,9 +80,18 @@ export default {
   margin: 1px;
   padding: 1px;
   border: 3px;
+  border-style: dotted;
   border-color: black;
 }
 img{
   border-radius: 50%;
 }
+
+.no-gutters {
+  margin-right: 0;
+  margin-left: 0;
+  padding-right: 0;
+  padding-left: 0;
+  }
+
 </style>

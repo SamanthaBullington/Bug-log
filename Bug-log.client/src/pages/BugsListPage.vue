@@ -1,20 +1,20 @@
 <template>
   <div class="container-fluid">
-    <div class="row bg-dark">
+    <div class="row c-bugs">
       <h1>Current Bugs:</h1>
     </div>
-    <div class="row justify-content-around">
-      <div v-if="bugs" class="col-md-6 action m-3">
+    <div class="row">
+      <div v-if="bugs" class="col-md-7 action mt-3 bug-style ">
         <BugCard
           v-for="b in bugs"
           :key="b.id"
           :bug="b"
         />
       </div>
-      <div v-else class="col-6">
-      <!-- <LoaderComponent /> -->
-      </div>
-      <div class=" card col-md-5 mt-2 h-25" id="new-bug-form">
+      <!-- <div v-else class="col-4">
+        <LoaderComponent />
+      </div> -->
+      <div class=" card col-md-4 mt-5 pb-2 pt-2  mr-1 h-25" id="new-bug-form">
         <form @submit.prevent="createBug">
           <div class="form-group">
             <label for="bug-name">Bug Title</label>
@@ -78,4 +78,9 @@ export default {
 }
 </script>
 
-<style></style>
+<style>
+.c-bugs{
+  background-color: #d40000 ;
+}
+
+  </style>

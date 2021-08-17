@@ -33,13 +33,7 @@ const routes = [
   {
     path: '/bugs/:id',
     name: 'BugDetails',
-    component: loadPage('BugDetailsPage'),
-    children: [{
-      path: '',
-      name: 'Notes',
-      component: loadPage('NoteDetails')
-    }
-    ]
+    component: loadPage('BugDetailsPage')
   }
 ]
 
