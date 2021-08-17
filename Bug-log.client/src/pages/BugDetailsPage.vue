@@ -1,20 +1,24 @@
 <template>
-  <div>
-    <BugDetailsCard :bug="currentBug" />
-  </div>
-  <div>
-    <NoteCard v-for="n in notes" :key="n.id" :note="n" />
-  </div>
-  <div class="col-6">
-    <form @submit.prevent="createNote">
-      <div class="form-group">
-        <label for="note"></label>
-        <textarea name="note" id="new-note-textarea" cols="30" rows="10" v-model="state.newNote.body"></textarea>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-5">
+        <BugDetailsCard :bug="currentBug" />
+        <div>
+          <NoteCard v-for="n in notes" :key="n.id" :note="n" />
+        </div>
       </div>
-      <button type="submit" class="btn btn-success" title="Create Note">
-        ADD NOTE
-      </button>
-    </form>
+      <div class="col-md-4">
+        <form @submit.prevent="createNote">
+          <div class="form-group">
+            <label for="note"></label>
+            <textarea name="note" id="new-note-textarea" cols="30" rows="10" v-model="state.newNote.body"></textarea>
+          </div>
+          <button type="submit" class="btn btn-success" title="Create Note">
+            ADD NOTE
+          </button>
+        </form>
+      </div>
+    </div>
   </div>
 </template>
 

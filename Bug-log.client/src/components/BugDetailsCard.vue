@@ -1,7 +1,7 @@
 <template>
-  <div class="row">
-    <div class="bug-style">
-      <div class="card w-100 ">
+  <div class="col-5">
+    <div class="bug-style row">
+      <div class="card">
         <div class="card-body ">
           <i class="mx-2 mdi btn" :class="[state.closed ? state.openClass : state.closedClass]" @click="changeClosed" :title="state.closed? 'Closed' : 'Open'">
           </i>
@@ -19,9 +19,9 @@
               Updated on: {{ updatedDate }}
             </p>
           </small>
-          <div class="col-4 text-right">
-            <DeleteButton @delete="deleteBug(bug.id)" :item-name="bug.title" />
-          </div>
+          <!-- <div class="col-4 text-right">
+              <DeleteButton @delete="deleteBug(bug.id)" :item-name="bug.title" />
+            </div> -->
         </div>
       </div>
     </div>
