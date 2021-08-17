@@ -1,6 +1,10 @@
 <template>
-  <BugDetailsCard :bug="currentBug" />
-  <NoteCard v-for="n in notes" :key="n.id" :note="n" />
+  <div>
+    <BugDetailsCard :bug="currentBug" />
+  </div>
+  <div>
+    <NoteCard v-for="n in notes" :key="n.id" :note="n" />
+  </div>
   <div class="col-6">
     <form @submit.prevent="createNote">
       <div class="form-group">
@@ -29,12 +33,12 @@ export default {
     const state = reactive({
       newNote: {
         body: '',
-        taskId: route.params.bug_id
+        bugId: route.params.id
       }
     })
     onMounted(async() => {
       try {
-        await notesService.getAllNotesByBugId(route.params.bug_id)
+        await notesService.getNotesByBugId(route.params.id)
         await bugsService.getOneBugById(route.params.id)
       } catch (error) {
         Pop.toast(error, 'error')

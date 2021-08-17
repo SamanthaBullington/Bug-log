@@ -13,7 +13,7 @@
             <span class="btn btn-danger">X Edit Bug</span>
           </div>
           <small>
-            <p class="card-text">
+            <p v-if="bug.updatedAt" class="card-text">
               Updated on: {{ updatedDate }}
             </p>
           </small>
@@ -30,7 +30,7 @@
 import { computed } from '@vue/runtime-core'
 import { AppState } from '../AppState'
 import { bugsService } from '../services/BugsService'
-import { useRoute, useRouter } from 'vue-router'
+import { useRouter } from 'vue-router'
 
 export default {
   props: {
@@ -41,7 +41,6 @@ export default {
 
   },
   setup() {
-    const route = useRoute()
     const router = useRouter()
     return {
       user: computed(() => AppState.user),
@@ -51,7 +50,7 @@ export default {
         router.push({ name: 'Bugs' })
       },
       updatedDate: computed(() => {
-        const bug = AppState.bugs.find(b => b.id === route.params.id)
+        const bug = AppState.currentBug
         const d = new Date(bug.updatedAt)
         return new Intl.DateTimeFormat('en-US').format(d)
       }),

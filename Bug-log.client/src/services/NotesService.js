@@ -4,7 +4,7 @@ import { api } from './AxiosService'
 
 class NotesService {
   async getNotesByBugId(id) {
-    const res = await api.get('api/bugs/' + id)
+    const res = await api.get('api/bugs/' + id + '/notes')
     AppState.notes = res.data
   }
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="card mb-3 text-dark" style="max-width: 540px;" v-if="note.creator">
+  <div class="card mb-3 text-dark" style="max-width: 540px;">
     <div class="row no-gutters">
       <div class="col-md-4 p-2">
         <img :src="note.creator.picture" :alt="note.creator.name" :title="note.creator.name">
@@ -14,7 +14,7 @@
             <br>
             <small>{{ Date(note.createdAt) }}</small>
           </div>
-          <DeleteBtn @delete="deleteNote(note.id)" :item-name="'note'" />
+          <DeleteButton @delete="deleteNote(note.id)" :item-name="'note'" />
         </div>
       </div>
     </div>

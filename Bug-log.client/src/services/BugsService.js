@@ -43,6 +43,11 @@ class BugsService {
     }
   }
 
+  async editClosed(bug, openStatus) {
+    bug.closed = openStatus
+    const res = await api.put('api/bugs/' + bug.id, bug)
+  }
+
   async editBug(bug) {
     try {
       const res = await api.put('api/bugs/' + bug.id, bug)
