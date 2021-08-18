@@ -11,7 +11,7 @@
             {{ bug.title }}
           </h5>
           <div contenteditable="true">
-            <p class="card-text">
+            <p class="card-text text-style">
               {{ bug.description }}
             </p>
           </div>
@@ -93,5 +93,9 @@ export default {
  .title-style{
    color:whitesmoke;
     text-shadow: 2px 2px black;
+  }
+   .text-style{
+   color:#ffffff;
+    text-shadow: 1px 1px rgb(0, 0, 0);
   }
 </style>

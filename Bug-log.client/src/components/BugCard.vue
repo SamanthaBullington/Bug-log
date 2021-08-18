@@ -18,7 +18,7 @@
           </router-link>
 
           <br />
-          <p class="card-text">
+          <p class="card-text text-style">
             {{ bug.description }}
           </p>
         </div>
@@ -109,6 +109,9 @@ img{
 .open{
   color:black;
   font-size: xx-large;
-
 }
+ .text-style{
+   color:#ffffff;
+    text-shadow: 1px 1px rgb(0, 0, 0);
+  }
 </style>
