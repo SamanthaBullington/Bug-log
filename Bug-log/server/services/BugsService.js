@@ -36,7 +36,7 @@ class BugsService {
       throw new Forbidden('This is not your bug')
     }
     currentBug.closed = true
-    const closedBug = await dbContext.Bugs.findByIdAndUpdate(currentBug.id, currentBug, { new: true, runValidators: true }).populate('creator')
+    const closedBug = await dbContext.Bugs.findByIdAndUpdate(currentBug.id, { closed: true }, { new: true, runValidators: true }).populate('creator')
     return closedBug
   }
 

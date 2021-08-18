@@ -1,15 +1,17 @@
 $body-bg: #e5e5e5;
-$primary: #27ae60;
+$primary: #ffffff;
 $secondary: #ff3697;
 $danger: #eb5757;
-$success: #27ae60;
+$success: 
+#d40000;
 $warning: #ff7f50;
 $info: #00c9bd;
 $dark: #313130;
 $grey: #cbcbcb;
 $dark-grey: #696969;
 $white: #fff;
-$light: #f8f9fa;
+$light: #f8faf9;
+$complete:#009231;
 
 $colors: (
   "primary": $primary,
@@ -22,7 +24,8 @@ $colors: (
   "grey": $grey,
   "dark-grey": $dark-grey,
   "white": $white,
-  "light": $light
+  "light": $light,
+  "complete": $complete,
 );
 
 $color-ranges: (

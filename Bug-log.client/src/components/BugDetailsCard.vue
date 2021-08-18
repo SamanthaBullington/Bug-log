@@ -1,17 +1,21 @@
 <template>
-  <div class="col-5">
-    <div class="bug-style row">
+  <div class="bug-style row">
+    <div class="col-12">
       <div class="card">
         <div class="card-body ">
-          <i class="mx-2 mdi btn" :class="[state.closed ? state.openClass : state.closedClass]" @click="changeClosed" :title="state.closed? 'Closed' : 'Open'">
-          </i>
-          <h5 class="card-title">
+          <div>
+            <span v-if="!bug.closed" @click="changeClosed(bug.id)" class=" mdi mdi-bug-outline open"></span>
+            <span v-else class=" mdi mdi-bug-check closed"></span>
+          </div>
+          <h5 class="card-title title-style">
             {{ bug.title }}
           </h5>
-          <p class="card-text">
-            {{ bug.description }}
-          </p>
-          <div class="action hoverable d-flex justify-content-end pr-5" v-if="account.id === bug.creatorId" @click.stop="editBug">
+          <div contenteditable="true">
+            <p class="card-text">
+              {{ bug.description }}
+            </p>
+          </div>
+          <div class="action hoverable d-flex justify-content-end pr-5" v-if="account.id === bug.creatorId && bug.closed === false" @click.stop="editBug">
             <span class="btn btn-danger">X Edit Bug</span>
           </div>
           <small>
@@ -86,4 +90,8 @@ export default {
   border: 3px;
   border-color: black;
 }
+ .title-style{
+   color:whitesmoke;
+    text-shadow: 2px 2px black;
+  }
 </style>

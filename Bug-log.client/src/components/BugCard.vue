@@ -12,7 +12,7 @@
         </div>
         <div class="col-md-6">
           <router-link :to="{name: 'BugDetails', params: {id:bug.id}}" class="col-8" :title="bug.title + ' Details'">
-            <h3 class="m-0">
+            <h3 class="m-0 title-style">
               {{ bug.title }}
             </h3>
           </router-link>
@@ -22,13 +22,14 @@
             {{ bug.description }}
           </p>
         </div>
-        <i class="mx-2 mdi btn h-25" :class="[state.closed ? state.openClass : state.closedClass]" :title="state.closed? 'Closed' : 'Open'">
-        </i>
-
-        <!-- <div class="col-4 text-right">
+        <div class="offset-6">
+          <span v-if="!bug.closed" @click="closeBug" class=" mdi mdi-bug-outline open"></span>
+          <span v-else class=" mdi mdi-bug-check closed"></span>
+        </div>
+      </div>
+      <!-- <div class="col-4 text-right">
           <DeleteButton @delete="deleteBug(bug.id)" :item-name="bug.title" />
         </div> -->
-      </div>
     </div>
   </div>
 </template>
@@ -62,8 +63,7 @@ export default {
       },
       async closeBug() {
         try {
-          state.closed = !state.closed
-          await bugsService.closeBug(props.bug, state.closed)
+          await bugsService.closeBug(props.bug.id)
           Pop.toast('Status Changed', 'success')
         } catch (error) {
           Pop.toast(error, 'error')
@@ -94,4 +94,21 @@ img{
   padding-left: 0;
   }
 
+  .card{
+    background-color: dimgray;
+  }
+
+  .title-style{
+    text-shadow: 2px 2px black;
+  }
+.closed{
+  color:#d40000;
+  text-shadow: 1px 1px black;
+  font-size: xx-large;
+}
+.open{
+  color:black;
+  font-size: xx-large;
+
+}
 </style>

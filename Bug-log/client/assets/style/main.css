@@ -2416,8 +2416,8 @@ fieldset:disabled a.btn {
 
 .btn-primary {
   color: white;
-  background-color: #3BA5DC;
-  border-color: #3BA5DC;
+  background-color: #d40000;
+  border-color: black;
 }
 .btn-primary:hover {
   color: white;

@@ -1,13 +1,13 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-5">
+      <div class="col-md-12 mt-3">
         <BugDetailsCard :bug="currentBug" />
-        <div>
-          <NoteCard v-for="n in notes" :key="n.id" :note="n" />
-        </div>
       </div>
-      <div class="col-md-4">
+      <div class="col-md-7 ml-3">
+        <NoteCard v-for="n in notes" :key="n.id" :note="n" />
+      </div>
+      <div class="col-md-4 ml-5 mt-2">
         <form @submit.prevent="createNote">
           <div class="form-group">
             <label for="note"></label>
